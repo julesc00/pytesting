@@ -1,9 +1,11 @@
 from django.test import TestCase
 
+from mixer.backend.django import mixer
+
 from .models import Student, Classroom
 
 
-def create_student(*args, **kwargs):
+def create_student():
     """Create a sample student"""
     Student.objects.create(
         first_name="Testuser",
@@ -25,10 +27,10 @@ class TestStudentModel(TestCase):
 
     def test_creating_a_student(self):
         """Test that a student can be created."""
-        create_student()
+        student = mixer.blend(Student)
         student_result = Student.objects.last()
 
-        self.assertEqual(student_result.first_name, "Testuser")
+        self.assertEqual(student_result.first_name, student.first_name)
 
     def test_str_representation(self):
         """Test the str representation."""
@@ -41,13 +43,7 @@ class TestStudentModel(TestCase):
     def test_grade_fail(self):
         """Test that a fail grade."""
 
-        Student.objects.create(
-            first_name="Testuser",
-            last_name="Doe",
-            admission_number=20,
-            is_qualified=False,
-            average_score=30
-        )
+        mixer.blend(Student, average_core=30)
         student_result = Student.objects.last()
 
         self.assertEqual(student_result.get_grades(), "Fail")
@@ -55,13 +51,7 @@ class TestStudentModel(TestCase):
     def test_grade_pass(self):
         """Test that a pass grade."""
 
-        Student.objects.create(
-            first_name="Testuser",
-            last_name="Doe",
-            admission_number=20,
-            is_qualified=False,
-            average_score=50
-        )
+        mixer.blend(Student, average_score=50)
         student_result = Student.objects.last()
 
         self.assertEqual(student_result.get_grades(), "Pass")
