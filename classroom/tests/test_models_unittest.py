@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from mixer.backend.django import mixer
 
-from .models import Student, Classroom
+from classroom.models import Student, Classroom
 
 
 def create_student():
@@ -41,9 +41,9 @@ class TestStudentModel(TestCase):
         self.assertTrue(str(student_result.first_name))
 
     def test_grade_fail(self):
-        """Test that a fail grade."""
+        """Test a fail grade."""
 
-        mixer.blend(Student, average_core=30)
+        mixer.blend(Student, average_score=30)
         student_result = Student.objects.last()
 
         self.assertEqual(student_result.get_grades(), "Fail")
