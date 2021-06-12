@@ -9,7 +9,7 @@ omit =
    *config/settings/*
    *manage.py
    */settings.py
-   */local_settings.py
+   */local.py
    */tests/*
    *apps.py
    *migrations/*

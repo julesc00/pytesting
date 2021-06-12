@@ -1,10 +1,12 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Student(models.Model):
     """Create a student model."""
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    username = models.SlugField(blank=True, null=True)
     admission_number = models.IntegerField(unique=True)
     is_qualified = models.BooleanField(default=False)
     average_score = models.DecimalField(max_digits=4, decimal_places=1, null=True)
@@ -23,6 +25,9 @@ class Student(models.Model):
 
         else:
             return "Error"
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.first_name)
 
 
 class Classroom(models.Model):
