@@ -7,11 +7,11 @@ class Student(models.Model):
     last_name = models.CharField(max_length=50)
     admission_number = models.IntegerField(unique=True)
     is_qualified = models.BooleanField(default=False)
-    average_score = models.DecimalField(max_digits=3, decimal_places=1, null=True)
+    average_score = models.DecimalField(max_digits=4, decimal_places=1, null=True)
 
     def __str__(self):
         """Unicode representation of Student."""
-        return f"{self.first_name} {self.last_name}"
+        return str(self.first_name)
 
     def get_grades(self):
         if self.average_score < 40:
@@ -21,7 +21,8 @@ class Student(models.Model):
         elif 70 < self.average_score < 100:
             return "Excellent"
 
-        return "Error"
+        else:
+            return "Error"
 
 
 class Classroom(models.Model):
