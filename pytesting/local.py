@@ -70,7 +70,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': "pytesting_db",
         'USER': "julio",
-        'PASSWORD': "ctrlsun1110",
+        'PASSWORD': "somePassword",
         'HOST': "127.0.0.1",
         'PORT': "",
     }
